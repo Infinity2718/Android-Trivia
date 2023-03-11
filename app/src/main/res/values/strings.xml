@@ -34,7 +34,6 @@
     <string name="congratulations">Congratulations!</string>
     <string name="share">Share</string>
     <string name="sharing_not_available">Sharing Not Available</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rate_us">This is the best app since slice bread, we think it\'s great! You should give us 5 stars!</string>
 </resources>

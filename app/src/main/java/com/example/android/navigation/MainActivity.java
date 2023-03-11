@@ -19,7 +19,9 @@ package com.example.android.navigation;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,8 +34,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.android.navigation.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RateUsFragment.Listener {
 
+    public static final String RATED = "rated";
     private NavController mNavController;
     private com.example.android.navigation.databinding.ActivityMainBinding mBinding;
 
@@ -47,12 +50,26 @@ public class MainActivity extends AppCompatActivity {
         mNavController.navigate(R.id.rateUsFragment);
         NavigationUI.setupActionBarWithNavController(this, mNavController, mBinding.drawerLayout);
         NavigationUI.setupWithNavController(mBinding.navView, mNavController);
-
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        if (!preferences.getBoolean(RATED, false)) {
+            mNavController.navigate(R.id.rateUsFragment);
+            preferences.edit().putBoolean(RATED, true).apply();
+        }
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-
         return NavigationUI.navigateUp(mNavController, mBinding.drawerLayout);
+    }
+
+    @Override
+    public void onClick(float rating) {
+        String msg;
+        if (rating > 4) {
+            msg = "This is going to be easy!";
+        } else {
+            msg = "Heh, good luck with this...";
+        }
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
